@@ -31,8 +31,17 @@ describe('MatchOverview', () => {
     expect(screen.getByText('Star Team')).toBeInTheDocument();
     expect(screen.getByText('B Team')).toBeInTheDocument();
     expect(screen.getByLabelText('Score 2 to 1')).toBeInTheDocument();
-    expect(screen.getByText('Live')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Live' })).toBeInTheDocument();
     expect(screen.getByLabelText('Match minute 67')).toBeInTheDocument();
+  });
+
+  it('shows the live status as a button and other statuses as a badge', () => {
+    const { rerender } = render(<MatchOverview state={liveState} />);
+    expect(screen.getByRole('button', { name: 'Live' })).toBeInTheDocument();
+
+    rerender(<MatchOverview state={{ ...liveState, status: 'upcoming' }} />);
+    expect(screen.queryByRole('button', { name: 'Upcoming' })).not.toBeInTheDocument();
+    expect(screen.getByText('Upcoming')).toBeInTheDocument();
   });
 
   it('shows "Finished" and hides the minute for a finished match', () => {

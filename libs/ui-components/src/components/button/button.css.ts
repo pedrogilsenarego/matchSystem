@@ -1,5 +1,7 @@
-import { style, styleVariants } from '@vanilla-extract/css';
+import { createVar, fallbackVar, keyframes, style, styleVariants } from '@vanilla-extract/css';
 import { vars } from 'design-system';
+
+const pulseRing = createVar();
 
 export const button = style({
   display: 'inline-flex',
@@ -46,6 +48,7 @@ export const buttonSize = styleVariants({
 
 export const buttonVariant = styleVariants({
   primary: {
+    vars: { [pulseRing]: vars.color.primary[500] },
     background: vars.color.primary[500],
     borderColor: vars.color.primary[500],
     color: vars.color.text.inverse,
@@ -55,6 +58,7 @@ export const buttonVariant = styleVariants({
     },
   },
   secondary: {
+    vars: { [pulseRing]: vars.color.secondary[500] },
     background: vars.color.secondary[500],
     borderColor: vars.color.secondary[500],
     color: vars.color.text.inverse,
@@ -64,6 +68,7 @@ export const buttonVariant = styleVariants({
     },
   },
   danger: {
+    vars: { [pulseRing]: vars.color.semantic.danger },
     background: vars.color.semantic.danger,
     borderColor: vars.color.semantic.danger,
     color: vars.color.text.inverse,
@@ -73,6 +78,7 @@ export const buttonVariant = styleVariants({
     },
   },
   success: {
+    vars: { [pulseRing]: vars.color.semantic.success },
     background: vars.color.semantic.success,
     borderColor: vars.color.semantic.success,
     color: vars.color.text.inverse,
@@ -82,6 +88,7 @@ export const buttonVariant = styleVariants({
     },
   },
   muted: {
+    vars: { [pulseRing]: vars.color.base[400] },
     background: 'transparent',
     borderColor: vars.color.base[300],
     color: vars.color.base[700],
@@ -114,6 +121,28 @@ export const buttonActive = style({
       background: vars.color.base[200],
       borderColor: vars.color.base[400],
       color: vars.color.base[900],
+    },
+  },
+});
+
+const pulse = keyframes({
+  '0%': {
+    boxShadow: `0 0 0 0 color-mix(in srgb, ${fallbackVar(pulseRing, vars.color.semantic.danger)} 55%, transparent)`,
+  },
+  '70%': {
+    boxShadow: '0 0 0 8px transparent',
+  },
+  '100%': {
+    boxShadow: '0 0 0 0 transparent',
+  },
+});
+
+export const buttonPulse = style({
+  animation: `${pulse} 1.5s ease-out infinite`,
+
+  '@media': {
+    '(prefers-reduced-motion: reduce)': {
+      animation: 'none',
     },
   },
 });

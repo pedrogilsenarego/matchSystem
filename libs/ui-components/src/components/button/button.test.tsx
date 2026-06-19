@@ -34,6 +34,19 @@ describe('Button', () => {
     expect(screen.getByRole('button')).toHaveClass(styles.buttonActive);
   });
 
+  it('adds the pulse class only when pulse is set', () => {
+    const { rerender } = render(<Button>Static</Button>);
+    expect(screen.getByRole('button')).not.toHaveClass(styles.buttonPulse);
+    rerender(
+      <Button variant="danger" pulse>
+        Live
+      </Button>
+    );
+    const button = screen.getByRole('button');
+    expect(button).toHaveClass(styles.buttonPulse);
+    expect(button).toHaveClass(styles.buttonVariant.danger);
+  });
+
   it('defaults the type attribute to button', () => {
     render(<Button>Submit guard</Button>);
     expect(screen.getByRole('button')).toHaveAttribute('type', 'button');

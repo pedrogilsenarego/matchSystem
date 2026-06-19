@@ -32,8 +32,10 @@ function EventsFeedComponent({ events, homeTeam = 'Home', awayTeam = 'Away' }: E
             {ordered.map((event) => {
               const meta = EVENT_META[event.type];
               const teamName = event.team === 'home' ? homeTeam : awayTeam;
+              const itemClassName =
+                event.type === 'goal' ? `${styles.item} ${styles.goal}` : styles.item;
               return (
-                <li key={event.id} className={styles.item}>
+                <li key={event.id} className={itemClassName}>
                   <span className={styles.minute}>{event.minute}&apos;</span>
                   <span className={styles.icon} aria-hidden="true">
                     {meta.icon}

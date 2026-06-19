@@ -12,6 +12,7 @@ export interface UseMatchOverviewResult {
   statusLabel: string;
   showMinute: boolean;
   showBreak: boolean;
+  isLive: boolean;
 }
 
 export function useMatchOverview(status: MatchStatus): UseMatchOverviewResult {
@@ -20,7 +21,8 @@ export function useMatchOverview(status: MatchStatus): UseMatchOverviewResult {
       statusLabel: STATUS_LABEL[status],
       showMinute: status === 'live',
       showBreak: status === 'break',
+      isLive: status === 'live',
     }),
-    [status],
+    [status]
   );
 }

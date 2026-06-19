@@ -68,3 +68,54 @@ exercise the composed app through the browser, complementing the existing Vitest
    disabled CI workflow ([.github/workflows/unit-tests.yml](.github/workflows/unit-tests.yml)) for when it's enabled.
 
 _Requested by: pedro.rego@daredata.engineering_
+
+## Persist / cache match state via React Query
+
+**Problem today:** match state lives in a per-component hook (`useLiveMatch` → `useReducer`).
+Refreshing the page restarts the match from scratch, and switching match/page throws away
+the accumulated state, so we re-receive the full payload on every navigation.
+
+**Goal:**
+- **Cache the current match state** in the React Query cache so navigating away and back
+  (match switch, page change) reads the last-known state instantly — no full refetch, the
+  socket just resumes streaming updates on top.
+- **Refetch the full payload only on a hard page refresh** — unless we choose to persist
+  (see below). Switching pages/matches should never need the full payload again.
+- **Optional persistence across refreshes:** if we *do* want state to survive a refresh,
+  add `@tanstack/query-persist-client-core` + a `localStorage`/`IndexedDB` persister so the
+  cache rehydrates on load; otherwise a refresh intentionally restarts.
+
+**Rough steps (builds on the React Query install already done):**
+1. Refactor `useLiveMatch` so the feed writes into the cache via
+   `queryClient.setQueryData(['match', matchId], reducerFn)` instead of a local `useReducer`.
+2. Read state with `useQuery(['match', matchId])`; set a long `gcTime` so cached matches
+   survive unmount/navigation, and `staleTime: Infinity` since the socket (not refetch) owns freshness.
+3. (Optional) Wire a persister for cross-refresh persistence; gate it behind a flag so the
+   "restart on refresh" behaviour stays available.
+
+_Requested by: pedro.rego@daredata.engineering_
+
+## Wrap the WebSocket feed in a React Query hook (follow the imocerto_fe structure)
+
+Move the live feed behind a React Query hook structured the same way the `imocerto_fe`
+project organizes its query hooks. `imocerto_fe` is REST-based (no WebSocket), so we borrow
+its **structure/conventions**, not a socket example — and apply them to the streaming feed.
+
+**The imocerto_fe "way" (reference: `imocerto_fe/src/components/modules/portfolio/api/queries/usePortfolio.ts`):**
+- Co-locate query hooks under an **`api/queries/`** folder per feature; keep the transport
+  (fetch/socket) separate under **`api/actions/`** (or `liveFeed/` here).
+- Define a **query-key factory** object, e.g. `MATCH_QUERY_KEYS = { all: [QueryKeys.MATCH], byId: (matchId) => [...all, matchId] }`,
+  backed by a central `constants/queryKeys` enum — never inline raw key arrays.
+- Export a reusable **`getMatchQueryOptions(matchId)`** built with `queryOptions({ queryKey, queryFn, enabled })`
+  so prefetch and the hook share one definition.
+- Expose a thin **`useMatch(matchId)`** hook that wraps `useQuery(getMatchQueryOptions(matchId))`.
+
+**Applying it to our WebSocket feed:**
+- `queryFn` resolves the initial snapshot (first `match_state` message) so `useQuery` owns
+  loading/error/enabled states instead of the hand-rolled `state === null` check.
+- The `LiveFeedConnection` subscription writes subsequent `tick`/`event`/`stats` messages into
+  the same cache entry via `queryClient.setQueryData(MATCH_QUERY_KEYS.byId(matchId), reducerFn)`.
+- Keep the feed swappable (real socket vs. fake) exactly as today; only the sink changes from
+  `useReducer` dispatch to `setQueryData`. This composes with the caching/persistence TODO above.
+
+_Requested by: pedro.rego@daredata.engineering_

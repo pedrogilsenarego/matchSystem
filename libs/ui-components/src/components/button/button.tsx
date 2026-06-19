@@ -10,6 +10,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   variant?: ButtonVariant;
   size?: ButtonSize;
   active?: boolean;
+  pulse?: boolean;
   asChild?: boolean;
 }
 
@@ -17,6 +18,7 @@ export function Button({
   variant = 'primary',
   size = 'md',
   active = false,
+  pulse = false,
   asChild = false,
   className,
   type = 'button',
@@ -32,6 +34,7 @@ export function Button({
         styles.buttonSize[size],
         styles.buttonVariant[variant],
         active && styles.buttonActive,
+        pulse && styles.buttonPulse,
         className
       )}
       {...props}

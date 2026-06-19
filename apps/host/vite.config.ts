@@ -32,7 +32,7 @@ export default defineConfig(({ mode }) => ({
       remotes: {
         scoreboard: 'http://localhost:5174/assets/remoteEntry.js',
       },
-      shared: ['react', 'react-dom'],
+      shared: ['react', 'react-dom', '@tanstack/react-query'],
     }),
   ],
   build: {

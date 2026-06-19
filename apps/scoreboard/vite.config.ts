@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => ({
       exposes: {
         './Dashboard': './src/dashboard/dashboard.tsx',
       },
-      shared: ['react', 'react-dom'],
+      shared: ['react', 'react-dom', '@tanstack/react-query'],
     }),
   ],
   build: {
