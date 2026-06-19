@@ -1,0 +1,39 @@
+# Unit tests CI — DISABLED for now.
+#
+# This workflow is intentionally commented out so GitHub Actions does not run it.
+# To enable it, uncomment everything below this header and commit.
+#
+# name: Unit Tests
+#
+# on:
+#   push:
+#     branches: [main]
+#   pull_request:
+#     branches: [main]
+#
+# jobs:
+#   test:
+#     name: Lint, typecheck & unit tests
+#     runs-on: ubuntu-latest
+#
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 20
+#           cache: npm
+#
+#       - name: Install dependencies
+#         run: npm ci
+#
+#       - name: Lint
+#         run: npm run lint
+#
+#       - name: Typecheck
+#         run: npm run build
+#
+#       - name: Run unit tests
+#         run: npm test
