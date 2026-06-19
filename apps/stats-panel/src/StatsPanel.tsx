@@ -1,24 +1,15 @@
 import { memo } from 'react';
 import { Card, Heading } from 'ui-components';
 import type { MatchStats } from './types';
+import { useStatsPanel } from './use-stats-panel';
 import styles from './StatsPanel.module.css';
 
 export interface StatsPanelProps {
   stats: MatchStats;
 }
 
-interface StatRow {
-  label: string;
-  home: number;
-  away: number;
-}
-
 function StatsPanelComponent({ stats }: StatsPanelProps) {
-  const rows: StatRow[] = [
-    { label: 'Shots on target', home: stats.shotsOnTargetHome, away: stats.shotsOnTargetAway },
-    { label: 'Fouls', home: stats.foulsHome, away: stats.foulsAway },
-    { label: 'Corners', home: stats.cornersHome, away: stats.cornersAway },
-  ];
+  const rows = useStatsPanel(stats);
 
   return (
     <Card asChild>
