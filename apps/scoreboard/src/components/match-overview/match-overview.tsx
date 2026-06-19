@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Badge, Card } from 'ui-components';
+import { Badge, Button, ElevatedCard } from 'ui-components';
 import type { MatchState } from '../../types';
 import { useMatchOverview } from './use-match-overview';
 import styles from './match-overview.module.css';
@@ -10,13 +10,19 @@ interface MatchOverviewProps {
 
 function MatchOverviewComponent({ state }: MatchOverviewProps) {
   const { homeTeam, awayTeam, scoreHome, scoreAway, minute, status } = state;
-  const { statusLabel, showMinute, showBreak } = useMatchOverview(status);
+  const { statusLabel, showMinute, showBreak, isLive } = useMatchOverview(status);
 
   return (
-    <Card asChild>
+    <ElevatedCard asChild variant="glass">
       <section aria-label="Match overview" className={styles.root}>
         <div className={styles.statusRow}>
-          <Badge variant={status}>{statusLabel}</Badge>
+          {isLive ? (
+            <Button variant="danger" size="sm" pulse>
+              {statusLabel}
+            </Button>
+          ) : (
+            <Badge variant={status}>{statusLabel}</Badge>
+          )}
           {showMinute && (
             <span className={styles.minute} aria-label={`Match minute ${minute}`}>
               {minute}&apos;
@@ -39,7 +45,7 @@ function MatchOverviewComponent({ state }: MatchOverviewProps) {
           <span className={styles.team}>{awayTeam}</span>
         </div>
       </section>
-    </Card>
+    </ElevatedCard>
   );
 }
 

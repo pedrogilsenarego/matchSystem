@@ -53,6 +53,7 @@ Federation chain is nested: **host → scoreboard → stats-panel**. `react`/`re
 ## Required patterns
 
 - **Design tokens via the theme contract.** Import `vars` from `design-system` and reference `vars.color.*`, `vars.spacing.*`, etc. in `*.css.ts`. Never hardcode colors, spacing, radii, or font sizes — add a token to [theme.css.ts](libs/design-system/src/theme.css.ts) if one is missing.
+- **Color palette.** Raw palette values live in [colors.ts](libs/design-system/src/colors.ts): `primary` (blue), `secondary` (orange), and `base` (gray/black), each on a **50–900** shade scale. They are wired through the theme contract, so use them as `vars.color.primary[500]` in `*.css.ts` or `var(--color-primary-500)` in `*.module.css`. Choose shades by role following the 60/30/10 rule (dominant `base`, secondary `primary`, accent `secondary`). Add new shades/ramps to `colors.ts`, not inline.
 - **`asChild` / Slot for polymorphic components.** New shared components follow [Card.tsx](libs/ui-components/src/components/Card.tsx): accept `asChild`, render `Slot` vs. the intrinsic element, merge `className` with `clsx`, spread `...props`.
 - **Lazy + Suspense across federation boundaries.** Load remote modules with `lazy(() => import('remote/Module'))` wrapped in `<Suspense fallback={<LoadingMessage/>}>`; wrap remote-consuming trees in `ErrorBoundary` (from `ui-components`).
 - **`React.memo` on presentational components** that re-render on every feed tick (see [MatchOverview.tsx](apps/scoreboard/src/components/MatchOverview.tsx)).

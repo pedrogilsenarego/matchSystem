@@ -8,3 +8,10 @@ dist
 .env.*
 .history/
 *.tsbuildinfo
+e2e/.results
+playwright-report
+blob-report
+test-results
+
+*storybook.log
+storybook-static

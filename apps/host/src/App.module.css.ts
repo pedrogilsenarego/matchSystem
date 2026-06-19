@@ -5,6 +5,8 @@ export const root = style({
   minHeight: '100vh',
   display: 'flex',
   flexDirection: 'column',
+  background: `linear-gradient(135deg, ${vars.color.primary[800]} 0%, ${vars.color.base[300]} 50%, ${vars.color.secondary[800]} 100%)`,
+  backgroundAttachment: 'fixed',
 });
 
 export const header = style({
