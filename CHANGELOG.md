@@ -58,3 +58,12 @@ These remain to align fully with the AGENTS.md conventions:
 - Reorganize the scoreboard into a module-based structure (e.g. `src/modules/<name>/`),
   moving `dashboard/` and its related files (components, hooks, live feed, data)
   under a self-contained module so the app can grow to host more modules.
+- UI/UX improvements:
+  - Make the half-time **Break** indicator blink/pulse (CSS animation on the Break
+    badge + "HT" indicator when `status === 'break'`), respecting
+    `prefers-reduced-motion`, so the 45' break is visually obvious.
+  - Add better live visual feedback for incoming updates (e.g. a queue/animation
+    that highlights new events and score/stat changes as they arrive).
+  - Reorganize colors following the 60/30/10 rule (dominant / secondary / accent).
+  - Build out a proper design system: define primary/secondary/accent colors and
+    a full token scale, and expose them through the `design-system` theme contract.
