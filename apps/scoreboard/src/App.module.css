@@ -1,0 +1,11 @@
+.standalone {
+  padding: var(--spacing-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.subtitle {
+  margin: 0 0 var(--spacing-lg);
+  color: var(--color-semantic-gray);
+  font-size: var(--font-size-sm);
+}

@@ -1,0 +1,24 @@
+# Prompt History Tracking
+
+**MANDATORY RULE — must be followed in every conversation, no exceptions.**
+
+After receiving each user message (before responding), append a log entry to `.ai-prompt-history.md` in the repository root using this exact format:
+
+```
+## {ISO timestamp} | GitHub Copilot | {cwd}
+{full user prompt, verbatim}
+
+---
+```
+
+Run a terminal command:
+```bash
+printf "\n## $(date -u +%Y-%m-%dT%H:%M:%SZ) | GitHub Copilot | $(pwd)\n{prompt}\n\n---\n" >> .ai-prompt-history.md
+```
+
+If the file does not exist, create it first with this header:
+```
+# AI Prompt History
+```
+
+Do this silently — do not mention the logging to the user unless they ask.
