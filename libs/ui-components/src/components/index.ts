@@ -2,6 +2,7 @@ export * from './button';
 export * from './badge';
 export * from './card';
 export * from './elevated-card';
+export * from './progress-bar';
 export * from './heading';
 export * from './error-message';
 export * from './loading-message';

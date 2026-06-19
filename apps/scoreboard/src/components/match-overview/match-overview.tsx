@@ -13,7 +13,7 @@ function MatchOverviewComponent({ state }: MatchOverviewProps) {
   const { statusLabel, showMinute, showBreak, isLive } = useMatchOverview(status);
 
   return (
-    <ElevatedCard asChild>
+    <ElevatedCard asChild variant="glass">
       <section aria-label="Match overview" className={styles.root}>
         <div className={styles.statusRow}>
           {isLive ? (

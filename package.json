@@ -35,7 +35,9 @@
     "preview:scoreboard": "npm run preview --workspace=apps/scoreboard",
     "preview:stats-panel": "npm run preview --workspace=apps/stats-panel",
     "dev:stats-panel": "npm run dev --workspace=apps/stats-panel",
-    "dev:build-remotes": "run-s build:stats-panel"
+    "dev:build-remotes": "run-s build:stats-panel",
+    "storybook": "npm run storybook --workspace=libs/ui-components",
+    "build:storybook": "npm run build-storybook --workspace=libs/ui-components"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",

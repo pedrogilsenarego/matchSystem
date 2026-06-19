@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { ElevatedCard, Heading } from 'ui-components';
+import { ElevatedCard, Heading, ProgressBar } from 'ui-components';
 import type { MatchStats } from './types';
 import { useStatsPanel } from './use-stats-panel';
 import styles from './StatsPanel.module.css';
@@ -12,7 +12,7 @@ function StatsPanelComponent({ stats }: StatsPanelProps) {
   const rows = useStatsPanel(stats);
 
   return (
-    <ElevatedCard asChild>
+    <ElevatedCard asChild variant="glass">
       <section aria-label="Match statistics" className={styles.root}>
         <Heading level={2}>Statistics</Heading>
 
@@ -22,16 +22,7 @@ function StatsPanelComponent({ stats }: StatsPanelProps) {
             <span className={styles.label}>Possession</span>
             <span className={styles.possessionValue}>{stats.possessionAway}%</span>
           </div>
-          <div
-            className={styles.bar}
-            role="meter"
-            aria-label="Possession"
-            aria-valuenow={stats.possessionHome}
-            aria-valuemin={0}
-            aria-valuemax={100}
-          >
-            <div className={styles.barHome} style={{ width: `${stats.possessionHome}%` }} />
-          </div>
+          <ProgressBar value={stats.possessionHome} label="Possession" />
         </div>
 
         <dl className={styles.statList}>

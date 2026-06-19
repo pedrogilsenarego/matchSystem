@@ -21,7 +21,7 @@ function EventsFeedComponent({ events, homeTeam = 'Home', awayTeam = 'Away' }: E
   const ordered = useEventsFeed(events);
 
   return (
-    <ElevatedCard asChild>
+    <ElevatedCard asChild variant="glass">
       <section aria-label="Live events feed" className={styles.root}>
         <Heading level={2}>Events</Heading>
 
