@@ -14,6 +14,7 @@ export default defineConfig({
     include: [
       'apps/**/src/**/*.{test,spec}.{ts,tsx}',
       'apps/ws-server/**/*.{test,spec}.js',
+      'libs/**/src/**/*.{test,spec}.{ts,tsx}',
     ],
   },
 });

@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Card, Heading } from 'ui-components';
+import { ElevatedCard, Heading } from 'ui-components';
 import type { EventType, MatchEvent } from '../../types';
 import { useEventsFeed } from './use-events-feed';
 import styles from './events-feed.module.css';
@@ -21,7 +21,7 @@ function EventsFeedComponent({ events, homeTeam = 'Home', awayTeam = 'Away' }: E
   const ordered = useEventsFeed(events);
 
   return (
-    <Card asChild>
+    <ElevatedCard asChild>
       <section aria-label="Live events feed" className={styles.root}>
         <Heading level={2}>Events</Heading>
 
@@ -54,7 +54,7 @@ function EventsFeedComponent({ events, homeTeam = 'Home', awayTeam = 'Away' }: E
           </ul>
         )}
       </section>
-    </Card>
+    </ElevatedCard>
   );
 }
 

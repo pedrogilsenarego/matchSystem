@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Card, Heading } from 'ui-components';
+import { ElevatedCard, Heading } from 'ui-components';
 import type { MatchStats } from './types';
 import { useStatsPanel } from './use-stats-panel';
 import styles from './StatsPanel.module.css';
@@ -12,7 +12,7 @@ function StatsPanelComponent({ stats }: StatsPanelProps) {
   const rows = useStatsPanel(stats);
 
   return (
-    <Card asChild>
+    <ElevatedCard asChild>
       <section aria-label="Match statistics" className={styles.root}>
         <Heading level={2}>Statistics</Heading>
 
@@ -44,7 +44,7 @@ function StatsPanelComponent({ stats }: StatsPanelProps) {
           ))}
         </dl>
       </section>
-    </Card>
+    </ElevatedCard>
   );
 }
 

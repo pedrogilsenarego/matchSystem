@@ -7,27 +7,12 @@ export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'success' | 'mu
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  /** Button visual style variant. @default 'primary' */
   variant?: ButtonVariant;
-  /** Button size. @default 'md' */
   size?: ButtonSize;
-  /** Toggle active/pressed state */
   active?: boolean;
-  /** Render as a different element via Radix Slot */
   asChild?: boolean;
 }
 
-/**
- * A flexible button component with multiple variants, sizes, and states.
- *
- * @example
- * ```tsx
- * <Button variant="primary">Click me</Button>
- * <Button variant="secondary" size="sm">Small</Button>
- * <Button variant="danger" disabled>Disabled</Button>
- * <Button variant="success" active>Active</Button>
- * ```
- */
 export function Button({
   variant = 'primary',
   size = 'md',

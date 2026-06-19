@@ -1,4 +1,5 @@
 import { createGlobalTheme, createGlobalThemeContract } from '@vanilla-extract/css';
+import { primary, secondary, base } from './colors';
 
 // Define the CSS variable names contract (no hashing, explicit names)
 const themeContract = createGlobalThemeContract({
@@ -22,6 +23,42 @@ const themeContract = createGlobalThemeContract({
       warning: 'color-semantic-warning',
       info: 'color-semantic-info',
       gray: 'color-semantic-gray',
+    },
+    primary: {
+      50: 'color-primary-50',
+      100: 'color-primary-100',
+      200: 'color-primary-200',
+      300: 'color-primary-300',
+      400: 'color-primary-400',
+      500: 'color-primary-500',
+      600: 'color-primary-600',
+      700: 'color-primary-700',
+      800: 'color-primary-800',
+      900: 'color-primary-900',
+    },
+    secondary: {
+      50: 'color-secondary-50',
+      100: 'color-secondary-100',
+      200: 'color-secondary-200',
+      300: 'color-secondary-300',
+      400: 'color-secondary-400',
+      500: 'color-secondary-500',
+      600: 'color-secondary-600',
+      700: 'color-secondary-700',
+      800: 'color-secondary-800',
+      900: 'color-secondary-900',
+    },
+    base: {
+      50: 'color-base-50',
+      100: 'color-base-100',
+      200: 'color-base-200',
+      300: 'color-base-300',
+      400: 'color-base-400',
+      500: 'color-base-500',
+      600: 'color-base-600',
+      700: 'color-base-700',
+      800: 'color-base-800',
+      900: 'color-base-900',
     },
     error: {
       background: 'color-error-background',
@@ -49,6 +86,7 @@ const themeContract = createGlobalThemeContract({
     sm: 'shadow-sm',
     md: 'shadow-md',
     lg: 'shadow-lg',
+    xl: 'shadow-xl',
   },
   fontSize: {
     xs: 'font-size-xs',
@@ -100,6 +138,9 @@ createGlobalTheme(':root', themeContract, {
       info: '#0d6efd',
       gray: '#6c757d',
     },
+    primary,
+    secondary,
+    base,
     error: {
       background: '#f8d7da',
       text: '#721c24',
@@ -126,6 +167,7 @@ createGlobalTheme(':root', themeContract, {
     sm: '0 1px 3px rgba(0, 0, 0, 0.08)',
     md: '0 2px 6px rgba(0, 0, 0, 0.1)',
     lg: '0 4px 12px rgba(0, 0, 0, 0.12)',
+    xl: '0 12px 32px rgba(0, 0, 0, 0.18)',
   },
   fontSize: {
     xs: '0.75rem',

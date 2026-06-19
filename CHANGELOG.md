@@ -8,6 +8,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- **Color palette tokens.** New [libs/design-system/src/colors.ts](libs/design-system/src/colors.ts)
+  defines `primary` (blue), `secondary` (orange), and `base` (gray/black), each with a
+  full **50–900** shade scale. These are wired through the theme contract in
+  [theme.css.ts](libs/design-system/src/theme.css.ts), so they are usable both as CSS
+  variables in `*.module.css` (`var(--color-primary-500)`) and as tokens in
+  vanilla-extract (`vars.color.primary[500]`). Colocated test
+  [colors.test.ts](libs/design-system/src/colors.test.ts); Vitest `include` extended to
+  cover `libs/**`.
+
 - **Convention: no magic numbers.** Added a rule to [AGENTS.md](AGENTS.md) requiring
   meaningful numeric/string literals (intervals, limits, dimensions, thresholds,
   ports, etc.) to be extracted into named constants in a dedicated `constants.ts`
@@ -64,6 +73,11 @@ These remain to align fully with the AGENTS.md conventions:
     `prefers-reduced-motion`, so the 45' break is visually obvious.
   - Add better live visual feedback for incoming updates (e.g. a queue/animation
     that highlights new events and score/stat changes as they arrive).
-  - Reorganize colors following the 60/30/10 rule (dominant / secondary / accent).
-  - Build out a proper design system: define primary/secondary/accent colors and
-    a full token scale, and expose them through the `design-system` theme contract.
+  - Reorganize colors following the 60/30/10 rule (dominant / secondary / accent),
+    now that the `primary` / `secondary` / `base` ramps exist — map the existing
+    `text` / `background` / `semantic` tokens onto the new palette and refactor the
+    app `*.module.css` files to consume `var(--color-*-NNN)` instead of ad-hoc values.
+  - ~~Build out a proper design system: define primary/secondary/accent colors and a
+    full token scale, and expose them through the `design-system` theme contract.~~
+    Done — palette + 50–900 scale added in `libs/design-system/src/colors.ts` and the
+    theme contract.

@@ -1,11 +1,9 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
-import { ErrorMessage } from './ErrorMessage';
+import { ErrorMessage } from '../error-message';
 
 export interface ErrorBoundaryProps {
   children: ReactNode;
-  /** Custom error UI (uses ErrorMessage if not provided) */
   fallback?: ReactNode;
-  /** Error callback for logging or tracking */
   onError?: (error: Error, errorInfo: ErrorInfo) => void;
 }
 
@@ -14,22 +12,6 @@ interface ErrorBoundaryState {
   error: Error | null;
 }
 
-/**
- * Catch JavaScript errors in child component trees and display a fallback UI.
- *
- * @example
- * ```tsx
- * // Basic usage
- * <ErrorBoundary onError={(error) => logToService(error)}>
- *   <MyApp />
- * </ErrorBoundary>
- *
- * // With custom fallback
- * <ErrorBoundary fallback={<div>Custom error UI</div>}>
- *   <RemoteComponent />
- * </ErrorBoundary>
- * ```
- */
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   state: ErrorBoundaryState = {
     hasError: false,

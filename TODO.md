@@ -41,3 +41,30 @@ Restructure the component layer into a clearer hierarchy instead of a flat `comp
 **Caveat / judgement call:** with the current handful of components this may be premature. Apply only if/when the component count and reuse grow enough that a flat structure becomes hard to navigate. Keep the atoms in the shared `ui-components` lib and the organisms in the consuming app.
 
 _Requested by: pedro.rego@daredata.engineering_
+
+## Add Playwright for end-to-end testing
+
+Adopt [Playwright](https://playwright.dev/) for end-to-end / integration tests that
+exercise the composed app through the browser, complementing the existing Vitest unit tests.
+
+**Why — beyond the unit tests:**
+
+- **Covers the federation boundary.** Unit tests mock the remotes; E2E loads the real
+  host → scoreboard → stats-panel chain and catches integration breaks that mocks hide.
+- **Real-time behaviour, end to end.** Drive the actual WebSocket feed (or a stubbed one)
+  and assert the UI updates: score/minute ticking, events appearing, the 45' break, pause.
+- **User flows.** Match switching (Match A ↔ B), pause/resume, and loading/error states
+  tested the way a user actually interacts with them.
+- **Cross-browser + a11y.** Run against Chromium/Firefox/WebKit; assert roles/labels
+  (`role="tab"`, `aria-selected`, the possession `meter`) that the components already expose.
+
+**Rough steps:**
+1. `npm i -D @playwright/test -w <root>` then `npx playwright install`.
+2. Add a `playwright.config.ts` with a `webServer` that runs `npm run dev` (host + remotes + ws-server)
+   and a `baseURL` pointing at the host (`:5173`).
+3. Put specs under `e2e/` (e.g. `match-switching.spec.ts`, `live-feed.spec.ts`, `pause.spec.ts`,
+   `half-time-break.spec.ts`); consider a deterministic/seeded feed so timing-based assertions are stable.
+4. Add an `e2e` script (`playwright test`) and a `test:all` that runs unit + e2e; wire it into the
+   disabled CI workflow ([.github/workflows/unit-tests.yml](.github/workflows/unit-tests.yml)) for when it's enabled.
+
+_Requested by: pedro.rego@daredata.engineering_
